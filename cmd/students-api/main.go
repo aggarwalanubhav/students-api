@@ -10,6 +10,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/aggarwalanubhav/students-api/internal/storage/sqlite"
+
 	"github.com/aggarwalanubhav/students-api/internal/config"
 	"github.com/aggarwalanubhav/students-api/internal/http/handlers/student"
 )
@@ -18,9 +20,15 @@ func main() {
 	//load config
 	cfg := config.MustLoad()
 	//database setup
+	storage, err := sqlite.New(cfg)
+	if err != nil {
+		log.Fatal("failed to setup database", slog.String("error", err.Error()))
+	}
+	slog.Info("database setup successfully", slog.String("env", cfg.Env), slog.String("version", "1.0.0"))
+
 	//setup router
 	router := http.NewServeMux()
-	router.HandleFunc("POST /api/students", student.New())
+	router.HandleFunc("POST /api/students", student.New(storage))
 	//setup server
 	server := http.Server{
 		Addr:    cfg.HttpServer.Addr,
