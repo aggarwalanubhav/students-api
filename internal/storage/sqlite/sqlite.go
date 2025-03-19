@@ -105,3 +105,18 @@ func (s *Sqlite) UpdateStudentById(id int64, name string, email string, age int)
 
 	return s.GetStudentById(id)
 }
+
+func (s *Sqlite) DeleteStudentById(id int64) error {
+	stmt, err := s.Db.Prepare("DELETE FROM students WHERE id = ?")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
