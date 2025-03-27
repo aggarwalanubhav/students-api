@@ -3,10 +3,10 @@ version: '3'
 services:
   app:
     build:
-      dockerfile: Dockerfile
-    command: ["./main", "config/local.yaml"]
+      context: .
+    command: ["./main", "-config", "config/local.yaml"]
     ports:
-      - "8080:8080"
+      - "8082:8082"
     environment:
       - GO_ENV=development
     depends_on:
