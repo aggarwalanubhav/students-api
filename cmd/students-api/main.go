@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/aggarwalanubhav/students-api/internal/storage/sqlite"
+	"github.com/go-chi/cors"
 
 	"github.com/aggarwalanubhav/students-api/internal/config"
 	"github.com/aggarwalanubhav/students-api/internal/http/handlers/student"
@@ -34,9 +35,15 @@ func main() {
 	router.HandleFunc("PATCH /api/students/{id}", student.UpdateStudentById(storage))
 	router.HandleFunc("DELETE /api/students/{id}", student.DeleteStudentById(storage))
 	//setup server
+	corsHandler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:4200"}, // Allow front-end requests
+		AllowedMethods:   []string{"GET", "POST", "PATCH", "DELETE"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+		AllowCredentials: true,
+	})
 	server := http.Server{
 		Addr:    cfg.HttpServer.Addr,
-		Handler: router,
+		Handler: corsHandler.Handler(router),
 	}
 	slog.Info("server started", slog.String("addr", cfg.HttpServer.Addr))
 

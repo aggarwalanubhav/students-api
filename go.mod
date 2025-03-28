@@ -3,6 +3,7 @@ module github.com/aggarwalanubhav/students-api
 go 1.24.0
 
 require (
+	github.com/go-chi/cors v1.2.1
 	github.com/go-playground/validator/v10 v10.25.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/mattn/go-sqlite3 v1.14.24

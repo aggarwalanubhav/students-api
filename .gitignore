@@ -27,3 +27,16 @@ go.work.sum
 
 /storage
 /config
+
+# Angular specific ignores
+students-frontend/node_modules/
+students-frontend/dist/
+students-frontend/.angular/
+students-frontend/.cache/
+students-frontend/.vscode/
+students-frontend/.env
+students-frontend/.npm/
+students-frontend/package-lock.json
+students-frontend/tmp/
+students-frontend/out-tsc/
+students-frontend/coverage/
